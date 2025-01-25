@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\MoonShine\Resources;
 
+
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Level;
-
 use MoonShine\Laravel\Resources\ModelResource;
 use MoonShine\UI\Components\Layout\Box;
 use MoonShine\UI\Fields\ID;
@@ -21,6 +21,14 @@ use MoonShine\ImportExport\Traits\ImportExportConcern;
 use MoonShine\ImportExport\ExportHandler;
 use MoonShine\Laravel\Fields\Slug;
 use MoonShine\Laravel\Handlers\Handler;
+use MoonShine\UI\Fields\Color;
+use MoonShine\UI\Fields\Image;
+
+
+
+//RELACIONES
+use App\MoonShine\Resources\DirectorResource;
+use MoonShine\Laravel\Fields\Relationships\BelongsTo;
 
 
 /**
@@ -44,6 +52,11 @@ class LevelResource extends ModelResource implements HasImportExportContract
     protected int $itemsPerPage = 10;
 
     protected bool $errorsAbove = true;
+
+
+    public static string $orderField = 'order'; // Default sort field
+
+    public static string $orderType = 'DESC'; // Default sort type
 
       /**
      * @return list<FieldContract>
@@ -71,8 +84,18 @@ class LevelResource extends ModelResource implements HasImportExportContract
     {
         return [
             ID::make()->sortable() ->columnSelection(true),
+
+            // Image::make('Avatar', 'images')->sortable(),
             Text::make('Nivel', 'level')->sortable(),
             Text::make('Slug', 'slug')->sortable(),
+            Color::make('color', 'color')->sortable(),
+            Text::make("C.C.T.", "cct")->sortable(),
+            BelongsTo::make('Director', 'director',
+            formatted: 'nombre', )->sortable(),
+            BelongsTo::make('Supervisor', 'supervisor',
+            formatted: 'nombre', )->sortable(),
+
+
         ];
     }
 
@@ -92,7 +115,7 @@ class LevelResource extends ModelResource implements HasImportExportContract
                     ->live()
 
 
-                
+
 
             ])
         ];
@@ -146,8 +169,8 @@ class LevelResource extends ModelResource implements HasImportExportContract
         ];
     }
 
-    
-    
+
+
 
 
 }

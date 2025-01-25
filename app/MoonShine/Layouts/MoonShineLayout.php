@@ -33,6 +33,8 @@ use MoonShine\UI\Components\{Breadcrumbs,
 use App\MoonShine\Resources\PostResource;
 use MoonShine\MenuManager\MenuItem;
 use App\MoonShine\Resources\LevelResource;
+use App\MoonShine\Resources\DirectorResource;
+use App\MoonShine\Resources\SupervisorResource;
 
 final class MoonShineLayout extends AppLayout
 {
@@ -48,8 +50,9 @@ final class MoonShineLayout extends AppLayout
         return [
             ...parent::menu(),
             MenuItem::make('Posts', PostResource::class),
-            
             MenuItem::make('Levels', LevelResource::class),
+            MenuItem::make('Directors', DirectorResource::class),
+            MenuItem::make('Supervisors', SupervisorResource::class),
         ];
     }
 

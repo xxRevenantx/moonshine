@@ -1,0 +1,16 @@
+<?php
+
+namespace App\Observers;
+
+use App\Models\Director;
+
+class DirectorObserver
+{
+
+    public function creating(Director $director): void
+    {
+        $director->order = Director::max('order') + 1;
+    }
+
+
+}

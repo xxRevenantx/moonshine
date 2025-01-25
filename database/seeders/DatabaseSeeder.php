@@ -6,6 +6,7 @@ use App\Models\Post;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Storage;
 
 class DatabaseSeeder extends Seeder
 {
@@ -22,9 +23,16 @@ class DatabaseSeeder extends Seeder
         //     'password' => bcrypt('12345678')
         // ]);
 
+          Storage::deleteDirectory('levels');
+          Storage::makeDirectory('levels');
+
+
         $this->call([
             PostSeeder::class,
+            SupervisorSeeder::class,
+            DirectorSeeder::class,
             LevelSeeder::class,
+
         ]);
 
     }

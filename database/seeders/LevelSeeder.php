@@ -2,8 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\Image;
+use App\Models\Level;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+
 
 class LevelSeeder extends Seeder
 {
@@ -12,17 +15,17 @@ class LevelSeeder extends Seeder
      */
     public function run(): void
     {
-        $levels = [
-            'Prescolar',
-            'Primaria',
-            'Secundaria',
-        ];
+        $levels = Level::factory(3)->create();
 
-        foreach ($levels as $level) {
-            \App\Models\Level::create([
-                'level' => $level,
-                'slug' => \Illuminate\Support\Str::slug($level),
+        $levels->each(function ($level) {
+            Image::factory(1)->create([
+                'imageable_id' => $level->id,
+                'imageable_type' => Level::class
             ]);
-        }
+        });
+
+
+
     }
+
 }
