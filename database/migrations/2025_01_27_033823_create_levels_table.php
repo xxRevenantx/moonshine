@@ -15,10 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('level');
             $table->string('slug')->unique();
-            $table->string('color');
-            $table->string('cct');
-            $table->unsignedBigInteger('director_id');
-            $table->unsignedBigInteger('supervisor_id');
+            $table->string('imagen')->nullable();
+            $table->string('color')->nullable();
+            $table->string('cct')->nullable();
+            $table->unsignedBigInteger('director_id')->nullable();
+            $table->unsignedBigInteger('supervisor_id')->nullable();
             $table->integer('order');
 
             $table->foreign('director_id')->references('id')->on('directors')->onDelete('cascade');

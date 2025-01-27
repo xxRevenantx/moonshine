@@ -12,5 +12,11 @@ class DirectorObserver
         $director->order = Director::max('order') + 1;
     }
 
+    public function deleted(Director $director)
+    {
+        // Actualizar los niveles
+        Director::where('order', '>', $director->order)
+            ->decrement('order');
+    }
 
 }

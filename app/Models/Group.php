@@ -1,19 +1,17 @@
 <?php
 
 namespace App\Models;
-
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Image extends Model
+class Group extends Model
 {
-
     use HasFactory;
 
-    protected $fillable = ['url', 'imageable_id', 'imageable_type'];
+    protected $fillable = ['group', 'grade_id'];
 
-    public function imageable()
+    public function grade()
     {
-        return $this->morphTo();
+        return $this->belongsTo(Grade::class);
     }
 }

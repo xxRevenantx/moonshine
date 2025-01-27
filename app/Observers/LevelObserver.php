@@ -12,5 +12,13 @@ class LevelObserver
         $level->order = Level::max('order') + 1;
     }
 
+    public function deleted(Level $level)
+    {
+        // Actualizar los niveles
+        Level::where('order', '>', $level->order)
+            ->decrement('order');
+
+    }
+
 
 }

@@ -23,12 +23,11 @@ class DatabaseSeeder extends Seeder
         //     'password' => bcrypt('12345678')
         // ]);
 
-          Storage::deleteDirectory('levels');
-          Storage::makeDirectory('levels');
+          Storage::deleteDirectory('imagenes');
+          Storage::makeDirectory('imagenes');
 
 
         $this->call([
-            PostSeeder::class,
             SupervisorSeeder::class,
             DirectorSeeder::class,
             LevelSeeder::class,

@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('nombre');
             $table->string('apellido_paterno');
-            $table->string('apellido_materno');
-            $table->string('email')->unique();
-            $table->string('telefono');
+            $table->string('apellido_materno')->nullable();
+            $table->string('email')->unique()->nullable();
+            $table->string('telefono')->nullable();
             $table->integer('order');
             $table->timestamps();
         });

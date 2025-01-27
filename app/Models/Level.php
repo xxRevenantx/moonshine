@@ -25,12 +25,17 @@ class Level extends Model
         return $this->belongsTo(Supervisor::class);
     }
 
-    public function images()
+    public function grade()
     {
-        return $this->morphOne(Image::class, 'imageable');
+        return $this->hasMany(Grade::class);
     }
 
 
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 
 
 }

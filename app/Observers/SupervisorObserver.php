@@ -13,4 +13,11 @@ class SupervisorObserver
     {
         $supervisor->order = Supervisor::max('order') + 1;
     }
+
+    public function deleted(Supervisor $supervisor)
+    {
+        // Actualizar los niveles
+        Supervisor::where('order', '>', $supervisor->order)
+            ->decrement('order');
+    }
 }

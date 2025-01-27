@@ -35,6 +35,10 @@ use MoonShine\MenuManager\MenuItem;
 use App\MoonShine\Resources\LevelResource;
 use App\MoonShine\Resources\DirectorResource;
 use App\MoonShine\Resources\SupervisorResource;
+use MoonShine\MenuManager\MenuDivider;
+use MoonShine\MenuManager\MenuGroup;
+use App\MoonShine\Resources\GroupResource;
+use App\MoonShine\Resources\GradeResource;
 
 final class MoonShineLayout extends AppLayout
 {
@@ -49,10 +53,16 @@ final class MoonShineLayout extends AppLayout
     {
         return [
             ...parent::menu(),
-            MenuItem::make('Posts', PostResource::class),
-            MenuItem::make('Levels', LevelResource::class),
-            MenuItem::make('Directors', DirectorResource::class),
-            MenuItem::make('Supervisors', SupervisorResource::class),
+            // MenuItem::make('Posts', PostResource::class),
+            MenuItem::make('Niveles', LevelResource::class)->icon('academic-cap'),
+            MenuItem::make('Groups', GroupResource::class)->icon('user-group'),
+            MenuItem::make('Grades', GradeResource::class)->icon('square-3-stack-3d'),
+            MenuDivider::make(),
+            MenuGroup::make('Autoridades')->icon('identification')->setItems([
+                MenuItem::make('Directores', DirectorResource::class)->icon('users'),
+                MenuItem::make('Supervisores', SupervisorResource::class)->icon('users'),
+            ]),
+
         ];
     }
 
@@ -63,7 +73,7 @@ final class MoonShineLayout extends AppLayout
     {
         parent::colors($colorManager);
 
-        // $colorManager->primary('#00000');
+
     }
 
     public function build(): Layout

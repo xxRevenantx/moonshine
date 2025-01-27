@@ -18,10 +18,16 @@ class LevelFactory extends Factory
      */
     public function definition(): array
     {
+
+        $faker = \Faker\Factory::create();
+        $faker->addProvider(new \Mmo\Faker\PicsumProvider($faker));
+        $faker->addProvider(new \Mmo\Faker\LoremSpaceProvider($faker));
+
         $nombre =  $this->faker->word();
         return [
             'level' => $nombre,
             'slug' => Str::slug($nombre),
+            'imagen' => 'imagenes/' . $faker->picsum('public/storage/imagenes', 640, 480, false),
             'color' => $this->faker->hexColor,
             'cct' =>  $this->faker->randomElement(['12PJN0226W', '12PPR0070B', '12PES0105U']),
             'director_id' => Director::all()->random()->id,
