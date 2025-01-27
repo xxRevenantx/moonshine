@@ -16,8 +16,12 @@ return new class extends Migration
             $table->string('grade');
             $table->integer('grade_number');
             $table->unsignedBigInteger('level_id');
+            $table->unsignedBigInteger('generation_id');
 
             $table->foreign('level_id')->references('id')->on('levels')->onDelete('cascade');
+            $table->foreign('generation_id')->references('id')->on('generations')->onDelete('cascade');
+
+
             $table->timestamps();
         });
     }

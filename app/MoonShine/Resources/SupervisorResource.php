@@ -30,7 +30,7 @@ class SupervisorResource extends ModelResource implements HasImportExportContrac
 
     protected string $title = 'Supervisores';
 
-    
+
     protected bool $createInModal = false;
 
     protected bool $editInModal = false;
@@ -51,7 +51,9 @@ class SupervisorResource extends ModelResource implements HasImportExportContrac
 
     protected SortDirection $sortDirection = SortDirection::ASC;
 
-    
+    protected bool $isLazy = true;
+
+
 
     public function getRedirectAfterSave(): string
     {
@@ -115,7 +117,7 @@ class SupervisorResource extends ModelResource implements HasImportExportContrac
                 Text::make('Zona', 'zona')->placeholder('Zona'),
                 Text::make('Sector', 'sector')->placeholder('Sector'),
 
-                
+
 
             ])
         ];
@@ -165,7 +167,7 @@ class SupervisorResource extends ModelResource implements HasImportExportContrac
             'sector',
         ];
     }
-  
+
     protected function rules(mixed $item): array
     {
         return [

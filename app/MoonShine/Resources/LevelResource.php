@@ -65,23 +65,25 @@ class LevelResource extends ModelResource implements HasImportExportContract
 
     protected bool $errorsAbove = true;
 
-    protected bool $isPrecognitive = true; 
+    protected bool $isPrecognitive = true;
 
     protected ?string $alias = 'niveles';
 
     protected string $sortColumn = 'order';
 
+    protected bool $isLazy = true;
+
     protected SortDirection $sortDirection = SortDirection::ASC;
 
 
 
-  
+
     protected function topButtons(): ListOf
         {
             return parent::topButtons()->add(
             ActionButton::make('Actualizar', '#')->icon('arrow-path')
                     ->dispatchEvent(AlpineJs::event(JsEvent::TABLE_UPDATED, $this->getListComponentName())),
-          
+
                     ActionButton::make('PDF',  route('level_pdf'))->blank()->icon('cloud-arrow-down')
                 );
         }
@@ -90,7 +92,7 @@ class LevelResource extends ModelResource implements HasImportExportContract
     {
         return 'admin/resource/niveles/index-page';
     }
-     
+
 
     public function getTitle(): string
     {
@@ -105,6 +107,9 @@ class LevelResource extends ModelResource implements HasImportExportContract
             ->filename(sprintf('Niveles_%s', date('Ymd-His'))) // Nombre y fecha del archivo
 
 
+
+
+
         ;
     }
 
@@ -116,7 +121,7 @@ class LevelResource extends ModelResource implements HasImportExportContract
             Text::make('Slug', 'slug'),
             Color::make('Color', 'color'),
             Text::make("C.C.T.", "cct"),
-            BelongsTo::make('Director', 'director', 
+            BelongsTo::make('Director', 'director',
             fn($item) => "$item->nombre $item->apellido_materno $item->apellido_paterno",
             resource: DirectorResource::class),
 
@@ -133,6 +138,8 @@ class LevelResource extends ModelResource implements HasImportExportContract
 
 
 
+
+
     protected function indexFields(): iterable // Campos que se mostrarán en la tabla
     {
         return [
@@ -143,7 +150,7 @@ class LevelResource extends ModelResource implements HasImportExportContract
             Text::make('Slug', 'slug')->sortable(),
             Color::make('color', 'color')->sortable(),
             Text::make("C.C.T.", "cct")->sortable(),
-            BelongsTo::make('Director', 'director', 
+            BelongsTo::make('Director', 'director',
             fn($item) => "$item->nombre $item->apellido_materno $item->apellido_paterno",
             resource: DirectorResource::class)->sortable(),
 
@@ -156,7 +163,7 @@ class LevelResource extends ModelResource implements HasImportExportContract
         ];
     }
 
-    
+
     protected function formFields(): iterable // Campos que se mostrarán en el formulario
     {
         return [
@@ -178,16 +185,16 @@ class LevelResource extends ModelResource implements HasImportExportContract
                 Text::make("C.C.T.", "cct")->placeholder("Escribe el C.C.T.")
                 ->reactive(),
 
-                BelongsTo::make('Director', 'director', 
+                BelongsTo::make('Director', 'director',
                 fn($item) => "$item->nombre $item->apellido_materno $item->apellido_paterno",
                 resource: DirectorResource::class)->reactive()->nullable(),
-    
+
                 BelongsTo::make('Supervisor', 'supervisor',
                  fn($item) => "$item->nombre $item->apellido_materno $item->apellido_paterno",
                  resource: SupervisorResource::class
                  )->reactive()->nullable(),
 
-           
+
 
 
 
@@ -196,7 +203,7 @@ class LevelResource extends ModelResource implements HasImportExportContract
         ];
     }
 
-  
+
     protected function detailFields(): iterable
     {
         return [
@@ -206,7 +213,7 @@ class LevelResource extends ModelResource implements HasImportExportContract
             Text::make('Slug', 'slug'),
             Color::make('Color', 'color'),
             Text::make("C.C.T.", "cct"),
-            BelongsTo::make('Director', 'director', 
+            BelongsTo::make('Director', 'director',
             fn($item) => "$item->nombre $item->apellido_materno $item->apellido_paterno",
             resource: DirectorResource::class),
 
@@ -225,7 +232,7 @@ class LevelResource extends ModelResource implements HasImportExportContract
         return [
             Text::make('Nivel', 'level')->placeholder("Buscar por nivel"),
             Text::make("C.C.T.", "cct")->placeholder("Buscar por C.C.T."),
-            BelongsTo::make('Director', 'director', 
+            BelongsTo::make('Director', 'director',
             fn($item) => "$item->nombre $item->apellido_materno $item->apellido_paterno",
             resource: DirectorResource::class)->nullable(),
 
@@ -244,7 +251,7 @@ class LevelResource extends ModelResource implements HasImportExportContract
         ];
     }
 
-     
+
     protected function rules(mixed $item): array
     {
         return [
@@ -271,7 +278,7 @@ class LevelResource extends ModelResource implements HasImportExportContract
                 ?->string('cct')
                 ->upper()
                 ->value()
-                
+
         ]);
     }
 

@@ -52,13 +52,13 @@ class DirectorResource extends ModelResource implements HasImportExportContract
 
     protected SortDirection $sortDirection = SortDirection::ASC;
 
-
+    protected bool $isLazy = true;
 
     public function getRedirectAfterSave(): string
     {
         return 'admin/resource/directores/index-page';
     }
-     
+
 
     protected function export(): ? Handler
     {
@@ -83,7 +83,7 @@ class DirectorResource extends ModelResource implements HasImportExportContract
 
 
 
-  
+
     protected function indexFields(): iterable
     {
         return [
@@ -95,13 +95,13 @@ class DirectorResource extends ModelResource implements HasImportExportContract
             Text::make('Apellido Materno', 'apellido_materno')->sortable(),
             Email::make('Email', 'email')->sortable(),
             Text::make('Telefono', 'telefono')->sortable(),
-            
+
 
 
         ];
     }
 
- 
+
     protected function formFields(): iterable
     {
         return [
@@ -117,7 +117,7 @@ class DirectorResource extends ModelResource implements HasImportExportContract
         ];
     }
 
-    
+
     protected function detailFields(): iterable
     {
         return [
@@ -149,7 +149,7 @@ class DirectorResource extends ModelResource implements HasImportExportContract
         return ['nombre', 'apellido_paterno', 'apellido_materno', 'email', 'telefono'];
     }
 
-  
+
     protected function rules(mixed $item): array
     {
         return [

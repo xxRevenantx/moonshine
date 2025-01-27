@@ -64,6 +64,7 @@ return [
         'model' => MoonshineUser::class,
         'middleware' => Authenticate::class,
         'pipelines' => [],
+
     ],
 
     // Authentication and profile
@@ -95,4 +96,8 @@ return [
         'es' => 'es',
         'en' => 'en',
     ],
+    'footer' => [
+        'copyright' => 'Hola mundo',
+
+    ]
 ];
