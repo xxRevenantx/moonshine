@@ -103,14 +103,20 @@ class GroupResource extends ModelResource implements HasImportExportContract
             fn($item) => "$item->grade",
             resource: GradeResource::class)->sortable(),
 
+            BelongsTo::make('Nivel perteneciente', 'level',
+            fn($item) => "$item->level",
+            resource: LevelResource::class)->sortable(),
+
+            BelongsTo::make('Generacion perteneciente', 'generation',
+            fn($item) => "$item->start_year - $item->end_year",
+            resource: GenerationResource::class)->sortable(),
+
 
 
         ];
     }
 
-    /**
-     * @return list<ComponentContract|FieldContract>
-     */
+
     protected function formFields(): iterable
     {
         return [

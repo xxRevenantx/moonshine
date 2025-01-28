@@ -22,6 +22,9 @@ use App\MoonShine\Resources\GroupResource;
 use App\MoonShine\Resources\GradeResource;
 use MoonShine\Contracts\ColorManager\ColorManagerContract;
 use App\MoonShine\Resources\GenerationResource;
+use App\MoonShine\Pages\Student\StudentIndexPage;
+use App\MoonShine\Pages\Student\StudentFormPage;
+use App\MoonShine\Pages\Student\StudentDetailPage;
 
 class MoonShineServiceProvider extends ServiceProvider
 {
@@ -55,6 +58,9 @@ class MoonShineServiceProvider extends ServiceProvider
             ])
             ->pages([
                 ...$config->getPages(),
+                StudentIndexPage::class,
+                StudentFormPage::class,
+                StudentDetailPage::class,
             ])
         ;
     }

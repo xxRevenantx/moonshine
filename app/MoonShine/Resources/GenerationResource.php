@@ -17,6 +17,7 @@ use MoonShine\Laravel\Handlers\Handler;
 use MoonShine\Support\AlpineJs;
 use MoonShine\Support\Enums\JsEvent;
 use MoonShine\Support\Enums\SortDirection;
+use MoonShine\UI\Fields\Enum;
 use MoonShine\UI\Fields\Number;
 use MoonShine\UI\Fields\Switcher;
 use MoonShine\UI\Fields\Text;
@@ -49,7 +50,7 @@ class GenerationResource extends ModelResource
 
     protected SortDirection $sortDirection = SortDirection::ASC;
 
-    
+
 
     public function modifyListComponent(ComponentContract $component): ComponentContract
 {
@@ -87,9 +88,7 @@ class GenerationResource extends ModelResource
             Number::make('start_year', 'Año de incio'),
             Number::make('end_year', 'Año de término'),
             Switcher::make('Status', 'status')
-            ->onValue('active')
-            ->offValue('inactive')
-            ->sortable()
+
         ];
     }
 
@@ -102,13 +101,14 @@ class GenerationResource extends ModelResource
 
             Switcher::make('Status', 'status')
                 ->onValue('active')
+                ->offValue('inactive')
                 ->withUpdateRow($this->getListComponentName())
 
 
         ];
     }
 
-  
+
     protected function formFields(): iterable
     {
         return [
@@ -119,6 +119,7 @@ class GenerationResource extends ModelResource
                 Switcher::make('Estado de la generación', 'status')
                 ->default('active')
                 ->onValue('active')
+                ->offValue('inactive')
                 ,
 
             ])
@@ -132,13 +133,18 @@ class GenerationResource extends ModelResource
             ID::make(),
             Number::make('Año de Inicio', 'start_year'),
             Number::make('Año de Término', 'end_year'),
-           Switcher::make('Status', 'status')
-            ->onValue('active')
-            ->sortable()
 
+        ];
+    }
 
-
-
+    protected function filters(): iterable // Campos que se mostrarán en los filtros
+    {
+        return [
+            Number::make('Año de Inicio', 'start_year')->placeholder('Año de inicio'),
+            Number::make('Año de Término', 'end_year')->placeholder('Año de término'),
+            Switcher::make('Status', 'status')
+                ->onValue('active')
+                ->offValue('inactive')
         ];
     }
 

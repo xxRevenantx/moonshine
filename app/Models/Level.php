@@ -30,6 +30,13 @@ class Level extends Model
         return $this->hasMany(Grade::class);
     }
 
+    public function groups()
+    {
+        return $this->hasMany(Group::class);
+    }
+
+
+
 
 
     public function getRouteKeyName()

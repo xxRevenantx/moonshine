@@ -78,16 +78,16 @@ class GradeResource extends ModelResource implements HasImportExportContract
     //     });
     // }
 
-    protected function resolveOrder(string $column, string $direction, ?Closure $callback): static
-    {
-        if ($callback instanceof Closure) {
-            $callback($this->newQuery(), "level_id", "ASC");
-        } else {
-            $this->newQuery()->orderBy("level_id", "ASC");
-        }
- 
-        return $this;
-    }
+    // protected function resolveOrder(string $column, string $direction, ?Closure $callback): static
+    // {
+    //     if ($callback instanceof Closure) {
+    //         $callback($this->newQuery(), "level_id", "ASC");
+    //     } else {
+    //         $this->newQuery()->orderBy("level_id", "ASC");
+    //     }
+
+    //     return $this;
+    // }
 
 
 
@@ -117,19 +117,21 @@ class GradeResource extends ModelResource implements HasImportExportContract
             ID::make(),
             Text::make('Grado', 'grade'),
             Text::make('Número de Grado', 'grade_number'),
+
             BelongsTo::make('Nivel perteneciente', 'level',
-            fn($item) => "$item->level",
+            fn($item) => "$item->attribute", // Ajusta "name" a la propiedad deseada
             resource: LevelResource::class),
-            BelongsTo::make('Año de inicio', 'generation',
-            fn($item) => "$item->start_year",
-            resource: GenerationResource::class),
-            BelongsTo::make('Año de Término', 'generation',
-            fn($item) => "$item->end_year",
-            resource: GenerationResource::class),
-            
-            BelongsTo::make('Status', 'generation',
-            fn($item) => $item->status == 'active' ? Badge::make($item->status, Color::SUCCESS) : Badge::make('inactivo', Color::ERROR),
-            resource: GenerationResource::class),
+
+            // BelongsTo::make('Año de inicio', 'generation',
+            // fn($item) => "$item->start_year",
+            // resource: GenerationResource::class),
+            // BelongsTo::make('Año de Término', 'generation',
+            // fn($item) => "$item->end_year",
+            // resource: GenerationResource::class),
+
+            // BelongsTo::make('Status', 'generation',
+            // fn($item) => $item->status == 'active' ? Badge::make($item->status, Color::SUCCESS) : Badge::make('inactivo', Color::ERROR),
+            // resource: GenerationResource::class),
 
 
 
@@ -146,7 +148,7 @@ class GradeResource extends ModelResource implements HasImportExportContract
             BelongsTo::make('Nivel perteneciente', 'level',
             fn($item) => "$item->level",
             resource: LevelResource::class)->sortable(),
-           
+
             BelongsTo::make('Año de inicio', 'generation',
             fn($item) => "$item->start_year",
             resource: GenerationResource::class)->sortable(),
@@ -163,7 +165,7 @@ class GradeResource extends ModelResource implements HasImportExportContract
         ];
 
 
-     
+
     }
 
 
@@ -186,7 +188,7 @@ class GradeResource extends ModelResource implements HasImportExportContract
                 BelongsTo::make('Generacion perteneciente', 'generation',
                 fn($item) => "$item->start_year - $item->end_year ",
                 resource: GenerationResource::class),
-           
+
 
                 ])
         ];
@@ -202,7 +204,7 @@ class GradeResource extends ModelResource implements HasImportExportContract
             Text::make('Grado', 'grade'),
             Text::make('Número de Grado', 'grade_number'),
 
-           
+
 
 
         ];
@@ -217,16 +219,9 @@ class GradeResource extends ModelResource implements HasImportExportContract
             fn($item) => "$item->level",
             resource: LevelResource::class)->nullable(),
 
-            BelongsTo::make('Año de inicio', 'generation',
-            fn($item) => "$item->start_year",
+            BelongsTo::make('Generación', 'generation',
+            fn($item) => "$item->start_year - $item->end_year ",
             resource: GenerationResource::class)->nullable(),
-
-
-            BelongsTo::make('Año de Término', 'generation',
-            fn($item) => "$item->end_year",
-            resource: GenerationResource::class)->nullable(),
-
-            
         ];
     }
 

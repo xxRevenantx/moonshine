@@ -82,6 +82,8 @@ class LevelResource extends ModelResource implements HasImportExportContract
 
 
 
+
+
     protected function topButtons(): ListOf
         {
             return parent::topButtons()->add(
@@ -236,7 +238,7 @@ class LevelResource extends ModelResource implements HasImportExportContract
         return [
             Text::make('Nivel', 'level')->placeholder("Buscar por nivel"),
 
-          
+
 
             Text::make("C.C.T.", "cct")->placeholder("Buscar por C.C.T."),
             BelongsTo::make('Director', 'director',

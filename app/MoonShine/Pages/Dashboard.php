@@ -22,6 +22,7 @@ class Dashboard extends Page
     public function getTitle(): string
     {
         return $this->title ?: 'Dashboard';
+
     }
 
     /**
@@ -29,6 +30,11 @@ class Dashboard extends Page
      */
     protected function components(): iterable
 	{
-		return [];
+		return [
+
+
+
+
+        ];
 	}
 }

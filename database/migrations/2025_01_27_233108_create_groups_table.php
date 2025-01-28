@@ -15,8 +15,13 @@ return new class extends Migration
             $table->id();
             $table->string('group');
             $table->unsignedBigInteger('grade_id')->nullable();
-    
+            $table->unsignedBigInteger('level_id')->nullable();
+            $table->unsignedBigInteger('generation_id')->nullable();
+
             $table->foreign('grade_id')->references('id')->on('grades')->onDelete('set null');
+            $table->foreign('level_id')->references('id')->on('levels')->onDelete('set null');
+            $table->foreign('generation_id')->references('id')->on('generations')->onDelete('set null');
+
             $table->timestamps();
         });
     }
