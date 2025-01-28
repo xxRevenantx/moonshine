@@ -43,6 +43,10 @@ use MoonShine\Support\ListOf;
 
 use MoonShine\Actions\Action;
 use Barryvdh\DomPDF\Facade\Pdf;
+use MoonShine\Laravel\QueryTags\QueryTag;
+use MoonShine\UI\Components\FormBuilder;
+use MoonShine\UI\Fields\Select;
+
 /**
  * @extends ModelResource<Level>
  */
@@ -231,6 +235,9 @@ class LevelResource extends ModelResource implements HasImportExportContract
     {
         return [
             Text::make('Nivel', 'level')->placeholder("Buscar por nivel"),
+
+          
+
             Text::make("C.C.T.", "cct")->placeholder("Buscar por C.C.T."),
             BelongsTo::make('Director', 'director',
             fn($item) => "$item->nombre $item->apellido_materno $item->apellido_paterno",

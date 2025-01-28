@@ -31,6 +31,9 @@ class DatabaseSeeder extends Seeder
             SupervisorSeeder::class,
             DirectorSeeder::class,
             LevelSeeder::class,
+            GenerationSeeder::class,
+            GradeSeeder::class,
+            GroupSeeder::class,
 
         ]);
 

@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('grade');
             $table->integer('grade_number');
-            $table->unsignedBigInteger('level_id');
-            $table->unsignedBigInteger('generation_id');
+            $table->unsignedBigInteger('level_id')->nullable();
+            $table->unsignedBigInteger('generation_id')->nullable();
 
-            $table->foreign('level_id')->references('id')->on('levels')->onDelete('cascade');
-            $table->foreign('generation_id')->references('id')->on('generations')->onDelete('cascade');
+            $table->foreign('level_id')->references('id')->on('levels')->onDelete('set null');
+            $table->foreign('generation_id')->references('id')->on('generations')->onDelete('set null');
 
 
             $table->timestamps();

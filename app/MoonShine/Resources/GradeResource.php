@@ -6,7 +6,9 @@ namespace App\MoonShine\Resources;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Grade;
-
+use Closure;
+use Illuminate\Contracts\Database\Eloquent\Builder;
+use MoonShine\Contracts\Core\TypeCasts\DataWrapperContract;
 use MoonShine\Laravel\Resources\ModelResource;
 use MoonShine\UI\Components\Layout\Box;
 use MoonShine\UI\Fields\ID;
@@ -24,6 +26,15 @@ use MoonShine\Laravel\Fields\Slug;
 use MoonShine\Laravel\Handlers\Handler;
 use MoonShine\UI\Fields\Number;
 use MoonShine\ImportExport\Contracts\HasImportExportContract;
+use MoonShine\Support\DTOs\Select\Option;
+use MoonShine\Support\DTOs\Select\Options;
+use MoonShine\Support\Enums\ClickAction;
+use MoonShine\Support\Enums\Color;
+use MoonShine\UI\Components\Badge;
+use MoonShine\UI\Components\Table\TableBuilder;
+use MoonShine\UI\Fields\Select;
+use MoonShine\UI\Fields\Switcher;
+
 /**
  * @extends ModelResource<Grade>
  */
@@ -56,6 +67,28 @@ class GradeResource extends ModelResource implements HasImportExportContract
     protected SortDirection $sortDirection = SortDirection::ASC;
 
 
+    protected ?ClickAction $clickAction = ClickAction::SELECT;
+
+
+
+    // protected function modifyQueryBuilder(Builder $builder): Builder // Filtro para mostrar solo los registros activos en la tabla
+    // {
+    //     return $builder->whereHas('generation', function ($query) {
+    //         $query->where('status', 'active');
+    //     });
+    // }
+
+    protected function resolveOrder(string $column, string $direction, ?Closure $callback): static
+    {
+        if ($callback instanceof Closure) {
+            $callback($this->newQuery(), "level_id", "ASC");
+        } else {
+            $this->newQuery()->orderBy("level_id", "ASC");
+        }
+ 
+        return $this;
+    }
+
 
 
 
@@ -87,6 +120,17 @@ class GradeResource extends ModelResource implements HasImportExportContract
             BelongsTo::make('Nivel perteneciente', 'level',
             fn($item) => "$item->level",
             resource: LevelResource::class),
+            BelongsTo::make('Año de inicio', 'generation',
+            fn($item) => "$item->start_year",
+            resource: GenerationResource::class),
+            BelongsTo::make('Año de Término', 'generation',
+            fn($item) => "$item->end_year",
+            resource: GenerationResource::class),
+            
+            BelongsTo::make('Status', 'generation',
+            fn($item) => $item->status == 'active' ? Badge::make($item->status, Color::SUCCESS) : Badge::make('inactivo', Color::ERROR),
+            resource: GenerationResource::class),
+
 
 
         ];
@@ -96,13 +140,30 @@ class GradeResource extends ModelResource implements HasImportExportContract
     protected function indexFields(): iterable
     {
         return [
+
             Text::make('Grado', 'grade'),
-            Text::make('Número de Grado', 'grade_number'),
+            Number::make('Número de Grado', 'grade_number'),
             BelongsTo::make('Nivel perteneciente', 'level',
             fn($item) => "$item->level",
             resource: LevelResource::class)->sortable(),
+           
+            BelongsTo::make('Año de inicio', 'generation',
+            fn($item) => "$item->start_year",
+            resource: GenerationResource::class)->sortable(),
+
+            BelongsTo::make('Año de Término', 'generation',
+            fn($item) => "$item->end_year ",
+            resource: GenerationResource::class)->sortable(),
+
+
+            BelongsTo::make('Status', 'generation',
+            fn($item) => $item->status == 'active' ? Badge::make($item->status, Color::SUCCESS) : Badge::make('inactivo', Color::ERROR),
+            resource: GenerationResource::class)->sortable(),
 
         ];
+
+
+     
     }
 
 
@@ -122,6 +183,11 @@ class GradeResource extends ModelResource implements HasImportExportContract
                 fn($item) => "$item->level",
                 resource: LevelResource::class),
 
+                BelongsTo::make('Generacion perteneciente', 'generation',
+                fn($item) => "$item->start_year - $item->end_year ",
+                resource: GenerationResource::class),
+           
+
                 ])
         ];
     }
@@ -135,6 +201,10 @@ class GradeResource extends ModelResource implements HasImportExportContract
             ID::make(),
             Text::make('Grado', 'grade'),
             Text::make('Número de Grado', 'grade_number'),
+
+           
+
+
         ];
     }
 
@@ -147,6 +217,16 @@ class GradeResource extends ModelResource implements HasImportExportContract
             fn($item) => "$item->level",
             resource: LevelResource::class)->nullable(),
 
+            BelongsTo::make('Año de inicio', 'generation',
+            fn($item) => "$item->start_year",
+            resource: GenerationResource::class)->nullable(),
+
+
+            BelongsTo::make('Año de Término', 'generation',
+            fn($item) => "$item->end_year",
+            resource: GenerationResource::class)->nullable(),
+
+            
         ];
     }
 
@@ -157,6 +237,11 @@ class GradeResource extends ModelResource implements HasImportExportContract
         return [
             'grade',
             'grade_number',
+            'level.level',
+            'generation.start_year',
+            'generation.end_year',
+            'generation.status'
+
 
 
 

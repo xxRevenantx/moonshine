@@ -22,8 +22,8 @@ return new class extends Migration
             $table->unsignedBigInteger('supervisor_id')->nullable();
             $table->integer('order');
 
-            $table->foreign('director_id')->references('id')->on('directors')->onDelete('cascade');
-            $table->foreign('supervisor_id')->references('id')->on('supervisors')->onDelete('cascade');
+            $table->foreign('director_id')->references('id')->on('directors')->onDelete('set null');
+            $table->foreign('supervisor_id')->references('id')->on('supervisors')->onDelete('set null');
 
             $table->timestamps();
         });

@@ -57,16 +57,16 @@ final class MoonShineLayout extends AppLayout
             ...parent::menu(),
             // MenuItem::make('Posts', PostResource::class),
             MenuItem::make('Niveles', LevelResource::class)->icon('academic-cap'),
+            MenuItem::make('Generaciones', GenerationResource::class)->icon('user-group'),
             MenuItem::make('Grados', GradeResource::class)->icon('square-3-stack-3d'),
             MenuItem::make('Grupos', GroupResource::class)->icon('user-group'),
-            MenuItem::make('Generaciones', GenerationResource::class)->icon('user-group'),
+
             MenuDivider::make(),
             MenuGroup::make('Autoridades')->icon('identification')->setItems([
                 MenuItem::make('Directores', DirectorResource::class)->icon('users'),
                 MenuItem::make('Supervisores', SupervisorResource::class)->icon('users'),
             ]),
 
-            MenuItem::make('Generations', GenerationResource::class),
         ];
     }
 

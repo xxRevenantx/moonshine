@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('groups', function (Blueprint $table) {
             $table->id();
             $table->string('group');
-            $table->unsignedBigInteger('grade_id');
+            $table->unsignedBigInteger('grade_id')->nullable();
     
-            $table->foreign('grade_id')->references('id')->on('grades')->onDelete('cascade');
+            $table->foreign('grade_id')->references('id')->on('grades')->onDelete('set null');
             $table->timestamps();
         });
     }
